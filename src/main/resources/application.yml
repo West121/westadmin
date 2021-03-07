@@ -1,0 +1,116 @@
+server:
+  port: 9009
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 200
+      min-spare: 30
+    connection-timeout: 5000
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: emos
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://localhost:3306/emos?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+  redis:
+    database: 0 # 数据库索引（默认 0）
+    host: 122.51.137.245 # 地址
+    port: 6379 # 端口（默认6379）
+    password: root123456! # 密码
+    timeout: 5000 # 连接超时时间（毫秒）
+    lettuce:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 8 # 连接池中的最大空闲连接
+        min-idle: 2 # 连接池中的最小空闲连接
+        time-between-eviction-runs: 100 # eviction 线程调度时间间隔
+        shutdown-timeout: 100 # 在关闭客户端连接之前等待任务处理完成的最长时间，在这之后，无论任务是否执行完成，都会被执行器关闭，默认100ms
+  data:
+    redis:
+      repositories:
+        enabled: false
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: emos
+      authentication-database: emos
+      username: emos123
+      password: emos123
+  security:
+    oauth2:
+      client:
+        registration:
+          gitee:
+            clientId: 8d08028c96d2b2e5d888ce772e62c4c7f92bfbeb17f16508533ecd072c808340
+            clientSecret: 32dbf1515fb6fcdc8f34da89b6dffcc555c931bf17f1eb99cc5ee3e6fc506d78
+            redirectUri: http://localhost:9009/login/oauth2/code/gitee
+            authorization-grant-type: authorization_code
+            scope: user_info
+            client-name: Gitee
+          github:
+            clientId: eb73157f636f83d41b5d
+            clientSecret: 61c932f7b94b0c261ea71e402c6876214a325f03
+        provider:
+          gitee:
+            authorizationUri: https://gitee.com/oauth/authorize
+            tokenUri: https://gitee.com/oauth/token
+            userInfoUri: https://gitee.com/api/v5/user
+            userNameAttribute: name
+mybatis-plus:
+  global-config:
+    banner: false
+    db-config:
+      logic-delete-field: delFlag
+      id-type: auto
+oss:
+  endpoint: http://122.51.159.126:9000
+  customDomain: nj
+  app-id: 1
+  region: cn-north-1
+  accessKey: westminio
+  secretKey: westminio
+auth:
+  rsa:
+    private_key: MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEA0vfvyTdGJkdbHkB8mp0f3FE0GYP3AYPaJF7jUd1M0XxFSE2ceK3k2kw20YvQ09NJKk+OMjWQl9WitG9pB6tSCQIDAQABAkA2SimBrWC2/wvauBuYqjCFwLvYiRYqZKThUS3MZlebXJiLB+Ue/gUifAAKIg1avttUZsHBHrop4qfJCwAI0+YRAiEA+W3NK/RaXtnRqmoUUkb59zsZUBLpvZgQPfj1MhyHDz0CIQDYhsAhPJ3mgS64NbUZmGWuuNKp5coY2GIj/zYDMJp6vQIgUueLFXv/eZ1ekgz2Oi67MNCk5jeTF2BurZqNLR3MSmUCIFT3Q6uHMtsB9Eha4u7hS31tj1UWE+D+ADzp59MGnoftAiBeHT7gDMuqeJHPL4b+kC+gzV4FGTfhR9q3tTbklZkD2A==
+  login:
+    # 登录缓存
+    cache-enable: true
+    #  是否限制单用户登录
+    single-login: false
+    #  验证码
+    login-code:
+      #  验证码类型配置 查看 LoginProperties 类
+      code-type: arithmetic
+      #  登录图形验证码有效时间/分钟
+      expiration: 2
+      #  验证码高度
+      width: 111
+      #  验证码宽度
+      height: 36
+      # 内容长度
+      length: 2
+      # 字体名称，为空则使用默认字体
+      font-name:
+      # 字体大小
+      font-size: 25
+  jwt:
+    header: Authorization
+    # 令牌前缀
+    token-start-with: Bearer
+    # 必须使用最少88位的Base64对该令牌进行编码
+    base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+    # 令牌过期时间 此处单位/毫秒 ，默认4小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
+    token-validity-in-seconds: 14400000
+    # 在线用户key
+    online-key: online-token-
+    # 验证码
+    code-key: code-key-
+    # token 续期检查时间范围（默认30分钟，单位毫秒），在token即将过期的一段时间内用户操作了，则给用户的token续期
+    detect: 1800000
+    # 续期时间范围，默认1小时，单位毫秒
+    renew: 3600000

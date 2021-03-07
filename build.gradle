@@ -1,0 +1,91 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.west'
+version = '1.0'
+sourceCompatibility = '15'
+
+jar {
+    manifest {
+        attributes "Manifest-Version": 1.0,
+                'Main-Class': 'com.west.WestadminApplication'
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    maven {
+        url 'https://maven.aliyun.com/repository/public/'
+    }
+}
+
+dependencies {
+    // mongodb 数据库
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    // redis 缓存
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.apache.commons:commons-pool2:2.9.0'
+
+    // spring boot
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2',
+            'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+    // mybatis-plus
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.2'
+    implementation 'p6spy:p6spy:3.9.1'
+
+    // hu tool 工具
+    implementation 'cn.hutool:hutool-all:5.5.9'
+
+    // swagger api 文档
+    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:3.0.2'
+
+    // Amazon S3
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.11.964'
+
+    // Java图形验证码
+    implementation 'com.github.whvcse:easy-captcha:1.6.2'
+
+    // ip 解析
+    implementation 'org.lionsoul:ip2region:1.7.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+allprojects {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        mavenLocal()
+        mavenCentral()
+    }
+}
