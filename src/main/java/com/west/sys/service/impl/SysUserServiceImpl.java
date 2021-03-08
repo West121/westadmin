@@ -16,10 +16,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
+    implements SysUserService {
 
-    @Override
-    public SysUserDTO getByUsername(String username) {
-        return baseMapper.getDtoByUsername(username);
-    }
+  @Override
+  public SysUserDTO getByUsername(String username) {
+    return baseMapper.getDtoByUsername(username);
+  }
 }
